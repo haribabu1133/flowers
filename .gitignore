@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+.env
+contacts.json
+orders.json
+contacts.xlsx
+orders.xlsx
