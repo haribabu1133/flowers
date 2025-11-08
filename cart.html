@@ -45,7 +45,7 @@
         <h1>Your Shopping Cart</h1>
         <div id="cart-items"></div>
         <div id="cart-total"></div>
-        <form id="order-form">
+        <form id="order-form" name="submit-to-google-sheet">
             <h3>Delivery Details</h3>
             <input type="text" name="fullName" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email" required>
@@ -79,5 +79,39 @@
     </footer>
 
     <script src="script.js"></script>
+     <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyMI6tRztQngW-jZ-4YjtcMMN2M14ZR_RQWzimmXEyqU6m4ERmZ4Dcc4ES8_MOjJHM/exec'
+        const form = document.forms['submit-to-google-sheet']
+        const submitButton = form.querySelector('button[type="submit"]')
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault()
+
+            // Disable button and show loading
+            submitButton.disabled = true
+            submitButton.textContent = 'Sending...'
+
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+
+                if (response.ok) {
+                    alert('Thank you for your message! We will get back to you soon.')
+                    form.reset()
+                } else {
+                    throw new Error('Server responded with error')
+                }
+            } catch (error) {
+                console.error('Error!', error.message)
+                alert('Error sending message. Please check your internet connection and try again.')
+            } finally {
+                // Re-enable button
+                submitButton.disabled = false
+                submitButton.textContent = 'Send Message'
+            }
+        })
+    </script>
 </body>
 </html>

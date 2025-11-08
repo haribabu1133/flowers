@@ -141,6 +141,25 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 if (response.ok) {
                     const result = await response.json();
+
+                    // Also send to Google Sheets using the form's data
+                    const sheetsFormData = new FormData(this);
+                    sheetsFormData.append('cart', JSON.stringify(orderData.cart));
+                    sheetsFormData.append('total', orderData.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0));
+
+                    try {
+                        const sheetsResponse = await fetch('https://script.google.com/macros/s/AKfycbzPCR3jJP9uMCkyyzDk1TSpRN8YffDeFi_ByfwxUChIkoOGGTm6vLj0rpIgcnV6-YQ/exec', {
+                            method: 'POST',
+                            body: sheetsFormData
+                        });
+
+                        if (!sheetsResponse.ok) {
+                            console.error('Google Sheets submission failed:', sheetsResponse.status);
+                        }
+                    } catch (sheetsError) {
+                        console.error('Error submitting to Google Sheets:', sheetsError);
+                    }
+
                     alert(`Order placed successfully! Order ID: ${result.orderId}`);
                     cartFunctions.cart = []; // Clear the cart
                     cartFunctions.saveCart();
