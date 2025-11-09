@@ -13,11 +13,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname)));
+app.use(express.static('.'));
 
 // Route for root to serve index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile('index.html');
 });
 
 // File paths for data storage
