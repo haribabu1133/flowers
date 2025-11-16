@@ -1,9 +1,8 @@
-# TODO: Push all files to new GitHub repository 'flowers'
+# TODO: Reorganize project into frontend and backend folders
 
-- [ ] Create new public GitHub repository named 'flowers' via browser
-- [ ] Set local git remote to https://github.com/haribabu1133/flowers.git (remove existing if any)
-- [ ] Rename current branch to 'main'
-- [ ] Add all files to git
-- [ ] Commit with message "initial commit"
-- [ ] Push to origin main
-- [ ] Verify push success
+- [ ] Create frontend/ folder
+- [ ] Create backend/ folder (if not exists)
+- [ ] Move frontend files to frontend/: HTML, CSS, JS files
+- [ ] Move backend files to backend/: JSON files, query, root package.json
+- [ ] Commit reorganization changes
+- [ ] Push to GitHub
